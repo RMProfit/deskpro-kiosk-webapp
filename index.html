@@ -15,9 +15,11 @@
 
 <script>
   document.getElementById('callBtn').addEventListener('click', () => {
-    // Force a full navigation that RoomOS can observe
-    const url = window.location.origin + window.location.pathname + '?action=call';
-    window.location.href = url;
+    // Send a message to the RoomOS macro
+    window.parent.postMessage(
+      JSON.stringify({ action: 'call' }),
+      '*'
+    );
   });
 </script>
 
