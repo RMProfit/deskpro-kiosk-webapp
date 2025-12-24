@@ -13,12 +13,12 @@
 <body>
   <button id="callBtn">Call for Assistance</button>
 
-  <script>
-    document.getElementById('callBtn').addEventListener('click', () => {
-      // Signal the macro by updating the page URL.
-      // Macro will see this and place the call.
-      window.location.hash = 'call';
-    });
-  </script>
+ <script>
+  document.getElementById('callBtn').addEventListener('click', () => {
+    // Force a full navigation so RoomOS reports the URL change
+    const base = window.location.origin + window.location.pathname;
+    window.location.href = base + '?action=call&ts=' + Date.now();
+  });
+</script>
 </body>
 </html>
