@@ -13,12 +13,13 @@
 <body>
   <button id="callBtn">Call for Assistance</button>
 
- <script>
+<script>
   document.getElementById('callBtn').addEventListener('click', () => {
-    // Force a full navigation so RoomOS reports the URL change
-    const base = window.location.origin + window.location.pathname;
-    window.location.href = base + '?action=call&ts=' + Date.now();
+    // Force a full navigation that RoomOS can observe
+    const url = window.location.origin + window.location.pathname + '?action=call';
+    window.location.href = url;
   });
 </script>
+
 </body>
 </html>
