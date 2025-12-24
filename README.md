@@ -1,2 +1,2 @@
 # deskpro-kiosk-webapp
-WebApp POC for Kiosk Mode
+WebApp POC for Kiosk Mode.
