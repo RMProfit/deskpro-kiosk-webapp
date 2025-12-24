@@ -14,14 +14,27 @@
   <button id="callBtn">Call for Assistance</button>
 
 <script>
-  document.getElementById('callBtn').addEventListener('click', () => {
-    // Send a message to the RoomOS macro
-    window.parent.postMessage(
-      JSON.stringify({ action: 'call' }),
-      '*'
-    );
+  document.getElementById('callBtn').addEventListener('click', async () => {
+    try {
+      // RoomOS WebView exposes xapi in many WebEngine contexts
+      if (!window.xapi?.Command?.Message?.Send) {
+        alert('xapi not available in this WebView');
+        return;
+      }
+
+      await window.xapi.Command.Message.Send({
+        Text: JSON.stringify({ action: 'call' })
+      });
+
+      // Optional: visual confirmation
+      console.log('Sent Message.Send: {action: call}');
+    } catch (e) {
+      console.log('Message.Send failed:', e);
+      alert('Message.Send failed - check console');
+    }
   });
 </script>
+
 
 </body>
 </html>
