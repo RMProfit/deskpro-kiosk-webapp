@@ -2,39 +2,53 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Assistance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <style>
-    html, body { height:100%; margin:0; }
-    body { display:flex; align-items:center; justify-content:center; font-family: system-ui, Arial; }
-    button { font-size: 36px; padding: 26px 44px; border-radius: 18px; border: 0; cursor: pointer; }
+    html, body {
+      margin: 0;
+      height: 100%;
+    }
+
+    body {
+      background: url("./assets/background.jpg") center center / cover no-repeat;
+      font-family: system-ui, Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    button {
+      font-size: 32px;
+      padding: 20px 36px;
+      border-radius: 16px;
+      border: none;
+      cursor: pointer;
+    }
   </style>
 </head>
+
 <body>
   <button id="callBtn">Call for Assistance</button>
 
-<script>
-  document.getElementById('callBtn').addEventListener('click', async () => {
-    try {
-      // RoomOS WebView exposes xapi in many WebEngine contexts
-      if (!window.xapi?.Command?.Message?.Send) {
-        alert('xapi not available in this WebView');
-        return;
+  <script>
+    document.getElementById('callBtn').addEventListener('click', async () => {
+      try {
+        if (!window.xapi?.Command?.Message?.Send) {
+          alert('xapi not available in this WebView');
+          return;
+        }
+
+        await window.xapi.Command.Message.Send({
+          Text: JSON.stringify({ action: 'call' })
+        });
+
+        console.log('Sent Message.Send: {action: call}');
+      } catch (e) {
+        console.log('Message.Send failed:', e);
+        alert('Message.Send failed - check console');
       }
-
-      await window.xapi.Command.Message.Send({
-        Text: JSON.stringify({ action: 'call' })
-      });
-
-      // Optional: visual confirmation
-      console.log('Sent Message.Send: {action: call}');
-    } catch (e) {
-      console.log('Message.Send failed:', e);
-      alert('Message.Send failed - check console');
-    }
-  });
-</script>
-
-
+    });
+  </script>
 </body>
 </html>
